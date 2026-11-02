@@ -1,692 +1,731 @@
 <!doctype html>
 <html lang="fr">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Maquette – Groupements | Avec les femmes</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;700&display=swap" rel="stylesheet">
-<style>
-/* =========================================================
-   À déplacer dans assets/styles/app.css lors de l'intégration
-   ========================================================= */
- 
-/* ---------- Jetons de design (variables) ---------- */
-:root {
-  --fond: #F2F3EF;
-  --surface: #FFFFFF;
-  --encre: #1C1F2A;
-  --encre-douce: #555B6E;
-  --ligne: #DADDE3;
-  --indigo: #2C3E91;
-  --indigo-pale: #E6E9F6;
-  --sur-indigo: #FFFFFF;
-  --ocre: #A86412;
-  --rayon: 10px;
-  --police-titre: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-  --police-texte: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
-  color-scheme: light;
-}
- 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --fond: #14161D;
-    --surface: #1C1F29;
-    --encre: #E8EAF0;
-    --encre-douce: #A4A9B8;
-    --ligne: #343847;
-    --indigo: #A3AFF2;
-    --indigo-pale: #262D4D;
-    --sur-indigo: #14161D;
-    --ocre: #E0A458;
-    color-scheme: dark;
-  }
-}
- 
-/* ---------- Base ---------- */
-*, *::before, *::after { box-sizing: border-box; }
- 
-body {
-  margin: 0;
-  background: var(--fond);
-  color: var(--encre);
-  font-family: var(--police-texte);
-  font-size: 1rem;
-  line-height: 1.55;
-}
- 
-a { color: var(--indigo); }
- 
-:focus-visible {
-  outline: 3px solid var(--ocre);
-  outline-offset: 2px;
-}
- 
-h1, h2 {
-  font-family: var(--police-titre);
-  line-height: 1.15;
-  margin: 0;
-}
- 
-h1 { font-size: clamp(2rem, 5vw, 2.75rem); letter-spacing: -0.01em; }
-h2 { font-size: 1.35rem; }
- 
-.visuellement-cache {
-  position: absolute;
-  width: 1px; height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-}
- 
-/* ---------- En-tête (partie commune : base.html.twig) ---------- */
-.entete { background: var(--surface); }
- 
-.entete__barre {
-  max-width: 72rem;
-  margin: 0 auto;
-  padding: 0.75rem 1.25rem;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem 2rem;
-}
- 
-.marque {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  min-height: 44px;
-  font-family: var(--police-titre);
-  font-weight: 700;
-  font-size: 1.25rem;
-  color: var(--encre);
-  text-decoration: none;
-}
- 
-.marque svg { color: var(--indigo); }
- 
-.nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
- 
-.nav a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 0 0.9rem;
-  border-radius: 999px;
-  color: var(--encre-douce);
-  text-decoration: none;
-}
- 
-.nav a:hover { color: var(--encre); }
- 
-.nav a[aria-current="page"] {
-  background: var(--indigo-pale);
-  color: var(--indigo);
-  font-weight: 700;
-}
- 
-/* Bande tissée, inspirée du Faso Dan Fani */
-.tissage {
-  height: 6px;
-  background: repeating-linear-gradient(
-    90deg,
-    var(--indigo) 0 22px,
-    var(--ocre) 22px 28px,
-    var(--fond) 28px 31px,
-    var(--indigo) 31px 37px,
-    var(--fond) 37px 40px
-  );
-}
- 
-/* ---------- Mise en page ---------- */
-.contenu {
-  max-width: 72rem;
-  margin: 0 auto;
-  padding: 2rem 1.25rem 4rem;
-}
- 
-.tete-page {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1rem 2rem;
-  margin-bottom: 1.75rem;
-}
- 
-.sous-titre {
-  margin: 0.4rem 0 0;
-  color: var(--encre-douce);
-}
- 
-.panneau {
-  background: var(--surface);
-  border: 1px solid var(--ligne);
-  border-radius: 14px;
-  padding: 1.5rem;
-}
- 
-.panneau + .panneau { margin-top: 1.5rem; }
- 
-.entete-panneau {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
- 
-/* ---------- Boutons ---------- */
-.bouton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  min-height: 44px;
-  padding: 0.55rem 1.15rem;
-  border: 2px solid var(--indigo);
-  border-radius: var(--rayon);
-  background: var(--indigo);
-  color: var(--sur-indigo);
-  font: inherit;
-  font-weight: 700;
-  text-decoration: none;
-  cursor: pointer;
-}
- 
-.bouton--secondaire {
-  background: transparent;
-  color: var(--indigo);
-}
- 
-.bouton:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
- 
-.groupe-boutons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
- 
-/* ---------- Recherche ---------- */
-.recherche { margin-bottom: 1.25rem; }
- 
-.recherche label {
-  display: block;
-  font-weight: 700;
-  margin-bottom: 0.35rem;
-}
- 
-.recherche input {
-  width: 100%;
-  max-width: 26rem;
-  min-height: 44px;
-  padding: 0.5rem 0.8rem;
-  border: 1px solid var(--encre-douce);
-  border-radius: var(--rayon);
-  background: var(--surface);
-  color: var(--encre);
-  font: inherit;
-}
- 
-/* ---------- Tableaux ---------- */
-.defilement { overflow-x: auto; }
- 
-table {
-  width: 100%;
-  min-width: 42rem;
-  border-collapse: collapse;
-}
- 
-th {
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid var(--ligne);
-  text-align: left;
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: var(--encre-douce);
-}
- 
-td {
-  padding: 1rem;
-  border-bottom: 1px solid var(--ligne);
-  vertical-align: middle;
-}
- 
-tbody tr:last-child td { border-bottom: 0; }
- 
-.nombre {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
- 
-.nom-groupement {
-  font-weight: 700;
-  font-size: 1.05rem;
-  color: var(--encre);
-  text-decoration: none;
-}
- 
-.nom-groupement:hover { text-decoration: underline; }
- 
-.discret {
-  display: block;
-  font-size: 0.9rem;
-  color: var(--encre-douce);
-}
- 
-/* ---------- Statuts : classes calquées sur les valeurs de l'enum ---------- */
-.statut {
-  display: inline-block;
-  padding: 0.15rem 0.65rem;
-  border-radius: 999px;
-  border: 1px solid transparent;
-  font-size: 0.85rem;
-  font-weight: 700;
-  white-space: nowrap;
-}
- 
-.statut--en_cours {
-  background: var(--indigo);
-  color: var(--sur-indigo);
-}
- 
-.statut--cloture {
-  background: transparent;
-  border-color: var(--encre-douce);
-  color: var(--encre-douce);
-}
- 
-/* ---------- Fiche groupement ---------- */
-.retour {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  margin-bottom: 0.25rem;
-  font-weight: 700;
-}
- 
-.coordonnees {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 2.5rem;
-  margin: 1rem 0 0;
-}
- 
-.coordonnees dt {
-  font-size: 0.875rem;
-  color: var(--encre-douce);
-}
- 
-.coordonnees dd {
-  margin: 0;
-  font-weight: 700;
-}
- 
-/* Frise du cycle d'épargne : début → limite des prêts → fin → rétribution */
-.frise {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
- 
-.etape {
-  position: relative;
-  padding: 1.9rem 1rem 0 0;
-}
- 
-.etape::before {
-  content: "";
-  position: absolute;
-  top: 0.45rem;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--ligne);
-}
- 
-.etape:last-child::before { display: none; }
- 
-.etape::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 1.15rem;
-  height: 1.15rem;
-  border-radius: 50%;
-  border: 3px solid var(--ligne);
-  background: var(--surface);
-}
- 
-.etape--passee::before { background: var(--indigo); }
- 
-.etape--passee::after {
-  border-color: var(--indigo);
-  background: var(--indigo);
-}
- 
-.etape--prochaine::after { border-color: var(--ocre); }
- 
-.etape__nom {
-  display: block;
-  font-size: 0.9rem;
-  color: var(--encre-douce);
-}
- 
-.etape__date {
-  display: block;
-  font-family: var(--police-titre);
-  font-weight: 700;
-  font-size: 1.1rem;
-}
- 
-.etape__note {
-  display: block;
-  margin-top: 0.25rem;
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--ocre);
-}
- 
-/* État vide : un groupement sans exercice */
-.vide {
-  padding: 2.5rem 1.5rem;
-  border: 2px dashed var(--ligne);
-  border-radius: 14px;
-}
- 
-.vide p {
-  max-width: 38rem;
-  margin: 0.5rem 0 1.25rem;
-  color: var(--encre-douce);
-}
- 
-/* ---------- Petits écrans ---------- */
-@media (max-width: 40rem) {
-  .frise { grid-template-columns: 1fr; }
- 
-  .etape { padding: 0 0 1.5rem 2.1rem; }
- 
-  .etape::before {
-    top: 0.45rem;
-    bottom: 0;
-    left: 0.45rem;
-    right: auto;
-    width: 3px;
-    height: auto;
-  }
-}
- 
-/* Séparation entre les écrans de la maquette (à ne pas intégrer) */
-.fin-ecran {
-  margin: 0;
-  border: 0;
-  border-top: 4px double var(--encre-douce);
-}
-</style>
-</head>
-<body>
- 
-<!-- =====================================================
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Maquette – Groupements | Avec les femmes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+      /* =========================================================
+                           À déplacer dans assets/styles/app.css lors de l'intégration
+                           ========================================================= */
+
+      /* ---------- Jetons de design (variables) ---------- */
+      :root {
+        --fond: #f2f3ef;
+        --surface: #ffffff;
+        --encre: #1c1f2a;
+        --encre-douce: #555b6e;
+        --ligne: #dadde3;
+        --indigo: #2c3e91;
+        --indigo-pale: #e6e9f6;
+        --sur-indigo: #ffffff;
+        --ocre: #a86412;
+        --rayon: 10px;
+        --police-titre: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+        --police-texte: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+        color-scheme: light;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --fond: #14161d;
+          --surface: #1c1f29;
+          --encre: #e8eaf0;
+          --encre-douce: #a4a9b8;
+          --ligne: #343847;
+          --indigo: #a3aff2;
+          --indigo-pale: #262d4d;
+          --sur-indigo: #14161d;
+          --ocre: #e0a458;
+          color-scheme: dark;
+        }
+      }
+
+      /* ---------- Base ---------- */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--fond);
+        color: var(--encre);
+        font-family: var(--police-texte);
+        font-size: 1rem;
+        line-height: 1.55;
+      }
+
+      a {
+        color: var(--indigo);
+      }
+
+      :focus-visible {
+        outline: 3px solid var(--ocre);
+        outline-offset: 2px;
+      }
+
+      h1,
+      h2 {
+        font-family: var(--police-titre);
+        line-height: 1.15;
+        margin: 0;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 5vw, 2.75rem);
+        letter-spacing: -0.01em;
+      }
+      h2 {
+        font-size: 1.35rem;
+      }
+
+      .visuellement-cache {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+
+      /* ---------- En-tête (partie commune : base.html.twig) ---------- */
+      .entete {
+        background: var(--surface);
+      }
+
+      .entete__barre {
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 0.75rem 1.25rem;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem 2rem;
+      }
+
+      .marque {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        min-height: 44px;
+        font-family: var(--police-titre);
+        font-weight: 700;
+        font-size: 1.25rem;
+        color: var(--encre);
+        text-decoration: none;
+      }
+
+      .marque svg {
+        color: var(--indigo);
+      }
+
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .nav a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 0 0.9rem;
+        border-radius: 999px;
+        color: var(--encre-douce);
+        text-decoration: none;
+      }
+
+      .nav a:hover {
+        color: var(--encre);
+      }
+
+      .nav a[aria-current="page"] {
+        background: var(--indigo-pale);
+        color: var(--indigo);
+        font-weight: 700;
+      }
+
+      /* Bande tissée, inspirée du Faso Dan Fani */
+      .tissage {
+        height: 6px;
+        background: repeating-linear-gradient(
+          90deg,
+          var(--indigo) 0 22px,
+          var(--ocre) 22px 28px,
+          var(--fond) 28px 31px,
+          var(--indigo) 31px 37px,
+          var(--fond) 37px 40px
+        );
+      }
+
+      /* ---------- Mise en page ---------- */
+      .contenu {
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 2rem 1.25rem 4rem;
+      }
+
+      .tete-page {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1rem 2rem;
+        margin-bottom: 1.75rem;
+      }
+
+      .sous-titre {
+        margin: 0.4rem 0 0;
+        color: var(--encre-douce);
+      }
+
+      .panneau {
+        background: var(--surface);
+        border: 1px solid var(--ligne);
+        border-radius: 14px;
+        padding: 1.5rem;
+      }
+
+      .panneau + .panneau {
+        margin-top: 1.5rem;
+      }
+
+      .entete-panneau {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      /* ---------- Boutons ---------- */
+      .bouton {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        min-height: 44px;
+        padding: 0.55rem 1.15rem;
+        border: 2px solid var(--indigo);
+        border-radius: var(--rayon);
+        background: var(--indigo);
+        color: var(--sur-indigo);
+        font: inherit;
+        font-weight: 700;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .bouton--secondaire {
+        background: transparent;
+        color: var(--indigo);
+      }
+
+      .bouton:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      .groupe-boutons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+
+      /* ---------- Recherche ---------- */
+      .recherche {
+        margin-bottom: 1.25rem;
+      }
+
+      .recherche label {
+        display: block;
+        font-weight: 700;
+        margin-bottom: 0.35rem;
+      }
+
+      .recherche input {
+        width: 100%;
+        max-width: 26rem;
+        min-height: 44px;
+        padding: 0.5rem 0.8rem;
+        border: 1px solid var(--encre-douce);
+        border-radius: var(--rayon);
+        background: var(--surface);
+        color: var(--encre);
+        font: inherit;
+      }
+
+      /* ---------- Tableaux ---------- */
+      .defilement {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        min-width: 42rem;
+        border-collapse: collapse;
+      }
+
+      th {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid var(--ligne);
+        text-align: left;
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: var(--encre-douce);
+      }
+
+      td {
+        padding: 1rem;
+        border-bottom: 1px solid var(--ligne);
+        vertical-align: middle;
+      }
+
+      tbody tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .nombre {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .nom-groupement {
+        font-weight: 700;
+        font-size: 1.05rem;
+        color: var(--encre);
+        text-decoration: none;
+      }
+
+      .nom-groupement:hover {
+        text-decoration: underline;
+      }
+
+      .discret {
+        display: block;
+        font-size: 0.9rem;
+        color: var(--encre-douce);
+      }
+
+      /* ---------- Statuts : classes calquées sur les valeurs de l'enum ---------- */
+      .statut {
+        display: inline-block;
+        padding: 0.15rem 0.65rem;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        font-size: 0.85rem;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .statut--en_cours {
+        background: var(--indigo);
+        color: var(--sur-indigo);
+      }
+
+      .statut--cloture {
+        background: transparent;
+        border-color: var(--encre-douce);
+        color: var(--encre-douce);
+      }
+
+      /* ---------- Fiche groupement ---------- */
+      .retour {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        margin-bottom: 0.25rem;
+        font-weight: 700;
+      }
+
+      .coordonnees {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 2.5rem;
+        margin: 1rem 0 0;
+      }
+
+      .coordonnees dt {
+        font-size: 0.875rem;
+        color: var(--encre-douce);
+      }
+
+      .coordonnees dd {
+        margin: 0;
+        font-weight: 700;
+      }
+
+      /* Frise du cycle d'épargne : début → limite des prêts → fin → rétribution */
+      .frise {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .etape {
+        position: relative;
+        padding: 1.9rem 1rem 0 0;
+      }
+
+      .etape::before {
+        content: "";
+        position: absolute;
+        top: 0.45rem;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--ligne);
+      }
+
+      .etape:last-child::before {
+        display: none;
+      }
+
+      .etape::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1.15rem;
+        height: 1.15rem;
+        border-radius: 50%;
+        border: 3px solid var(--ligne);
+        background: var(--surface);
+      }
+
+      .etape--passee::before {
+        background: var(--indigo);
+      }
+
+      .etape--passee::after {
+        border-color: var(--indigo);
+        background: var(--indigo);
+      }
+
+      .etape--prochaine::after {
+        border-color: var(--ocre);
+      }
+
+      .etape__nom {
+        display: block;
+        font-size: 0.9rem;
+        color: var(--encre-douce);
+      }
+
+      .etape__date {
+        display: block;
+        font-family: var(--police-titre);
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+
+      .etape__note {
+        display: block;
+        margin-top: 0.25rem;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--ocre);
+      }
+
+      /* État vide : un groupement sans exercice */
+      .vide {
+        padding: 2.5rem 1.5rem;
+        border: 2px dashed var(--ligne);
+        border-radius: 14px;
+      }
+
+      .vide p {
+        max-width: 38rem;
+        margin: 0.5rem 0 1.25rem;
+        color: var(--encre-douce);
+      }
+
+      /* ---------- Petits écrans ---------- */
+      @media (max-width: 40rem) {
+        .frise {
+          grid-template-columns: 1fr;
+        }
+
+        .etape {
+          padding: 0 0 1.5rem 2.1rem;
+        }
+
+        .etape::before {
+          top: 0.45rem;
+          bottom: 0;
+          left: 0.45rem;
+          right: auto;
+          width: 3px;
+          height: auto;
+        }
+      }
+
+      /* Séparation entre les écrans de la maquette (à ne pas intégrer) */
+      .fin-ecran {
+        margin: 0;
+        border: 0;
+        border-top: 4px double var(--encre-douce);
+      }
+    </style>
+  </head>
+  <body>
+ 
+    <!-- =====================================================
      ÉCRAN 1 : liste des groupements (groupement/index)
      ===================================================== -->
-<header class="entete" id="liste">
-  <div class="entete__barre">
-    <a class="marque" href="#liste">
-      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
-        <path d="M3 13h22a11 11 0 0 1-22 0Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
-        <path d="M8 9c3-2.5 9-2.5 12 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-      </svg>
-      Avec les femmes
-    </a>
-    <nav aria-label="Navigation principale">
-      <ul class="nav">
-        <li><a href="#liste" aria-current="page">Groupements</a></li>
-        <li><a href="#">Membres</a></li>
-        <li><a href="#">Exercices</a></li>
-      </ul>
-    </nav>
-  </div>
-  <div class="tissage"></div>
-</header>
+    <header class="entete" id="liste">
+      <div class="entete__barre">
+        <a class="marque" href="#liste">
+          <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+            <path d="M3 13h22a11 11 0 0 1-22 0Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M8 9c3-2.5 9-2.5 12 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+          Avec les femmes
+        </a>
+        <nav aria-label="Navigation principale">
+          <ul class="nav">
+            <li><a href="#liste" aria-current="page">Groupements</a></li>
+            <li><a href="#">Membres</a></li>
+            <li><a href="#">Exercices</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="tissage"></div>
+    </header>
  
-<main class="contenu">
-  <div class="tete-page">
-    <div>
-      <h1>Groupements</h1>
-      <p class="sous-titre">3 groupements suivis</p>
-    </div>
-    <a class="bouton" href="#">Nouveau groupement</a>
-  </div>
+    <main class="contenu">
+      <div class="tete-page">
+        <div>
+          <h1>Groupements</h1>
+          <p class="sous-titre">3 groupements suivis</p>
+        </div>
+        <a class="bouton" href="#">Nouveau groupement</a>
+      </div>
  
-  <section class="panneau" aria-labelledby="titre-liste">
-    <h2 id="titre-liste" class="visuellement-cache">Liste des groupements</h2>
+      <section class="panneau" aria-labelledby="titre-liste">
+        <h2 id="titre-liste" class="visuellement-cache">Liste des groupements</h2>
  
-    <form class="recherche" role="search">
-      <label for="q">Rechercher un groupement</label>
-      <input id="q" name="q" type="search" placeholder="Nom ou ville">
-    </form>
+        <form class="recherche" role="search">
+          <label for="q">Rechercher un groupement</label>
+          <input id="q" name="q" type="search" placeholder="Nom ou ville">
+        </form>
  
-    <div class="defilement">
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Groupement</th>
-            <th scope="col">Téléphone</th>
-            <th scope="col">Exercice en cours</th>
-            <th scope="col" class="nombre">Exercices</th>
-            <th scope="col"><span class="visuellement-cache">Actions</span></th>
-          </tr>
-        </thead>
-        <tbody>
-            {% for groupement in dataGroupements %}
-          <tr>
-            <td>
-              <a class="nom-groupement" href="#fiche-benkadi">{{groupement.nom}}</a>
-              <span class="discret">{{groupement.adresse}}</span>
-            </td>
-            <td>{{groupement.tel}}</td>
-            <td>
-              <span class="statut statut--en_cours">{{groupement.exercices[0].statut.label}}</span>
-              <span class="discret">depuis le {{groupement.exercices[0].debutAt|format_date('long')}}</span>
-            </td>
-            <td class="nombre">3</td>
-            <td><a href="#fiche-benkadi">Voir la fiche</a></td>
-          </tr>
-          {% endfor %}
+        <div class="defilement">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Groupement</th>
+                <th scope="col">Téléphone</th>
+                <th scope="col">Exercice en cours</th>
+                <th scope="col" class="nombre">Exercices</th>
+                <th scope="col"><span class="visuellement-cache">Actions</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for groupement in dataGroupements %}
+          
+                <tr>
+                  <td>
+                    <a class="nom-groupement" href="#fiche-benkadi">{{ groupement.nom }}</a>
+                    <span class="discret">{{ groupement.adresse }}</span>
+                  </td>
+                  <td>{{ groupement.tel }}</td>
+                  <td>
+                    <span class="statut statut--en_cours">{{ groupement.exerciceEncoursDto.statut }}</span>
+                    <span class="discret">depuis le {{ groupement.exerciceEncoursDto.dateDebut|format_date('long') }}</span>
+                  </td>
+                  <td class="nombre">3</td>
+                  <td><a href="#fiche-benkadi">Voir la fiche</a></td>
+                </tr>
+              {% endfor %}
           
           
-        </tbody>
-      </table>
-    </div>
-  </section>
-</main>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
  
-<hr class="fin-ecran">
+    <hr class="fin-ecran">
  
-<!-- =====================================================
+    <!-- =====================================================
      ÉCRAN 2 : fiche d'un groupement avec exercice en cours
      (groupement/show)
      ===================================================== -->
-<header class="entete" id="fiche-benkadi">
-  <div class="entete__barre">
-    <a class="marque" href="#liste">
-      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
-        <path d="M3 13h22a11 11 0 0 1-22 0Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
-        <path d="M8 9c3-2.5 9-2.5 12 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-      </svg>
-      Avec les femmes
-    </a>
-    <nav aria-label="Navigation principale">
-      <ul class="nav">
-        <li><a href="#liste" aria-current="page">Groupements</a></li>
-        <li><a href="#">Membres</a></li>
-        <li><a href="#">Exercices</a></li>
-      </ul>
-    </nav>
-  </div>
-  <div class="tissage"></div>
-</header>
- 
-<main class="contenu">
-  <a class="retour" href="#liste">Tous les groupements</a>
- 
-  <div class="tete-page">
-    <div>
-      <h1>Benkadi</h1>
-      <dl class="coordonnees">
-        <div>
-          <dt>Téléphone</dt>
-          <dd>+226 70 12 34 56</dd>
-        </div>
-        <div>
-          <dt>Adresse</dt>
-          <dd>Secteur 22, Bobo-Dioulasso</dd>
-        </div>
-      </dl>
-    </div>
-    <div class="groupe-boutons">
-      <a class="bouton bouton--secondaire" href="#">Modifier</a>
-      <button class="bouton" type="button" disabled>Ouvrir un exercice</button>
-    </div>
-  </div>
- 
-  <section class="panneau" aria-labelledby="titre-exercice">
-    <div class="entete-panneau">
-      <div>
-        <h2 id="titre-exercice">Exercice en cours</h2>
-        <p class="sous-titre">Du 1er mars 2026 au 28 février 2027</p>
+    <header class="entete" id="fiche-benkadi">
+      <div class="entete__barre">
+        <a class="marque" href="#liste">
+          <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+            <path d="M3 13h22a11 11 0 0 1-22 0Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M8 9c3-2.5 9-2.5 12 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+          Avec les femmes
+        </a>
+        <nav aria-label="Navigation principale">
+          <ul class="nav">
+            <li><a href="#liste" aria-current="page">Groupements</a></li>
+            <li><a href="#">Membres</a></li>
+            <li><a href="#">Exercices</a></li>
+          </ul>
+        </nav>
       </div>
-      <button class="bouton bouton--secondaire" type="button">Clôturer l’exercice</button>
-    </div>
+      <div class="tissage"></div>
+    </header>
  
-    <ol class="frise">
-      <li class="etape etape--passee">
-        <span class="etape__nom">Début</span>
-        <span class="etape__date">1er mars 2026</span>
-      </li>
-      <li class="etape etape--prochaine">
-        <span class="etape__nom">Date limite des prêts</span>
-        <span class="etape__date">30 novembre 2026</span>
-        <span class="etape__note">Encore 34 jours pour prêter</span>
-      </li>
-      <li class="etape">
-        <span class="etape__nom">Fin</span>
-        <span class="etape__date">28 février 2027</span>
-      </li>
-      <li class="etape">
-        <span class="etape__nom">Rétribution</span>
-        <span class="etape__date">14 mars 2027</span>
-      </li>
-    </ol>
-  </section>
+    <main class="contenu">
+      <a class="retour" href="#liste">Tous les groupements</a>
  
-  <section class="panneau" aria-labelledby="titre-historique">
-    <div class="entete-panneau">
-      <h2 id="titre-historique">Historique des exercices</h2>
-    </div>
-    <div class="defilement">
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Période</th>
-            <th scope="col">Statut</th>
-            <th scope="col">Rétribution</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1er mars 2026 – 28 février 2027</td>
-            <td><span class="statut statut--en_cours">En cours</span></td>
-            <td>Prévue le 14 mars 2027</td>
-          </tr>
-          <tr>
-            <td>1er mars 2025 – 28 février 2026</td>
-            <td><span class="statut statut--cloture">Clôturé</span></td>
-            <td>14 mars 2026</td>
-          </tr>
-          <tr>
-            <td>4 mars 2024 – 28 février 2025</td>
-            <td><span class="statut statut--cloture">Clôturé</span></td>
-            <td>15 mars 2025</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-</main>
+      <div class="tete-page">
+        <div>
+          <h1>Benkadi</h1>
+          <dl class="coordonnees">
+            <div>
+              <dt>Téléphone</dt>
+              <dd>+226 70 12 34 56</dd>
+            </div>
+            <div>
+              <dt>Adresse</dt>
+              <dd>Secteur 22, Bobo-Dioulasso</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="groupe-boutons">
+          <a class="bouton bouton--secondaire" href="#">Modifier</a>
+          <button class="bouton" type="button" disabled>Ouvrir un exercice</button>
+        </div>
+      </div>
  
-<hr class="fin-ecran">
+      <section class="panneau" aria-labelledby="titre-exercice">
+        <div class="entete-panneau">
+          <div>
+            <h2 id="titre-exercice">Exercice en cours</h2>
+            <p class="sous-titre">Du 1er mars 2026 au 28 février 2027</p>
+          </div>
+          <button class="bouton bouton--secondaire" type="button">Clôturer l’exercice</button>
+        </div>
  
-<!-- =====================================================
+        <ol class="frise">
+          <li class="etape etape--passee">
+            <span class="etape__nom">Début</span>
+            <span class="etape__date">1er mars 2026</span>
+          </li>
+          <li class="etape etape--prochaine">
+            <span class="etape__nom">Date limite des prêts</span>
+            <span class="etape__date">30 novembre 2026</span>
+            <span class="etape__note">Encore 34 jours pour prêter</span>
+          </li>
+          <li class="etape">
+            <span class="etape__nom">Fin</span>
+            <span class="etape__date">28 février 2027</span>
+          </li>
+          <li class="etape">
+            <span class="etape__nom">Rétribution</span>
+            <span class="etape__date">14 mars 2027</span>
+          </li>
+        </ol>
+      </section>
+ 
+      <section class="panneau" aria-labelledby="titre-historique">
+        <div class="entete-panneau">
+          <h2 id="titre-historique">Historique des exercices</h2>
+        </div>
+        <div class="defilement">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Période</th>
+                <th scope="col">Statut</th>
+                <th scope="col">Rétribution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1er mars 2026 – 28 février 2027</td>
+                <td><span class="statut statut--en_cours">En cours</span></td>
+                <td>Prévue le 14 mars 2027</td>
+              </tr>
+              <tr>
+                <td>1er mars 2025 – 28 février 2026</td>
+                <td><span class="statut statut--cloture">Clôturé</span></td>
+                <td>14 mars 2026</td>
+              </tr>
+              <tr>
+                <td>4 mars 2024 – 28 février 2025</td>
+                <td><span class="statut statut--cloture">Clôturé</span></td>
+                <td>15 mars 2025</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+ 
+    <hr class="fin-ecran">
+ 
+    <!-- =====================================================
      ÉCRAN 3 : fiche d'un groupement sans exercice
      (même template groupement/show, autre état)
      ===================================================== -->
-<header class="entete" id="fiche-yiriwa">
-  <div class="entete__barre">
-    <a class="marque" href="#liste">
-      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
-        <path d="M3 13h22a11 11 0 0 1-22 0Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
-        <path d="M8 9c3-2.5 9-2.5 12 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-      </svg>
-      Avec les femmes
-    </a>
-    <nav aria-label="Navigation principale">
-      <ul class="nav">
-        <li><a href="#liste" aria-current="page">Groupements</a></li>
-        <li><a href="#">Membres</a></li>
-        <li><a href="#">Exercices</a></li>
-      </ul>
-    </nav>
-  </div>
-  <div class="tissage"></div>
-</header>
+    <header class="entete" id="fiche-yiriwa">
+      <div class="entete__barre">
+        <a class="marque" href="#liste">
+          <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+            <path d="M3 13h22a11 11 0 0 1-22 0Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M8 9c3-2.5 9-2.5 12 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+          Avec les femmes
+        </a>
+        <nav aria-label="Navigation principale">
+          <ul class="nav">
+            <li><a href="#liste" aria-current="page">Groupements</a></li>
+            <li><a href="#">Membres</a></li>
+            <li><a href="#">Exercices</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="tissage"></div>
+    </header>
  
-<main class="contenu">
-  <a class="retour" href="#liste">Tous les groupements</a>
+    <main class="contenu">
+      <a class="retour" href="#liste">Tous les groupements</a>
  
-  <div class="tete-page">
-    <div>
-      <h1>Yiriwa</h1>
-      <dl class="coordonnees">
+      <div class="tete-page">
         <div>
-          <dt>Téléphone</dt>
-          <dd>+226 65 88 10 37</dd>
+          <h1>Yiriwa</h1>
+          <dl class="coordonnees">
+            <div>
+              <dt>Téléphone</dt>
+              <dd>+226 65 88 10 37</dd>
+            </div>
+            <div>
+              <dt>Adresse</dt>
+              <dd>Secteur 4, Banfora</dd>
+            </div>
+          </dl>
         </div>
-        <div>
-          <dt>Adresse</dt>
-          <dd>Secteur 4, Banfora</dd>
+        <div class="groupe-boutons">
+          <a class="bouton bouton--secondaire" href="#">Modifier</a>
         </div>
-      </dl>
-    </div>
-    <div class="groupe-boutons">
-      <a class="bouton bouton--secondaire" href="#">Modifier</a>
-    </div>
-  </div>
+      </div>
  
-  <section class="vide" aria-labelledby="titre-vide">
-    <h2 id="titre-vide">Aucun exercice pour l’instant</h2>
-    <p>Ouvrez le premier exercice pour commencer à enregistrer les cotisations et les prêts des membres de ce groupement.</p>
-    <button class="bouton" type="button">Ouvrir le premier exercice</button>
-  </section>
-</main>
+      <section class="vide" aria-labelledby="titre-vide">
+        <h2 id="titre-vide">Aucun exercice pour l’instant</h2>
+        <p>Ouvrez le premier exercice pour commencer à enregistrer les cotisations et les prêts des membres de ce groupement.</p>
+        <button class="bouton" type="button">Ouvrir le premier exercice</button>
+      </section>
+    </main>
  
-</body>
+  </body>
 </html>
- 
