@@ -1,3 +1,480 @@
-body {
-    background-color: skyblue;
-}
+      /* =========================================================
+                                                                                                                                                                                                                           À déplacer dans assets/styles/app.css lors de l'intégration
+                                                                                                                                                                                                                           ========================================================= */
+
+      /* ---------- Jetons de design (variables) ---------- */
+      :root {
+          --fond: #f2f3ef;
+          --surface: #ffffff;
+          --encre: #1c1f2a;
+          --encre-douce: #555b6e;
+          --ligne: #dadde3;
+          --indigo: #2c3e91;
+          --indigo-pale: #e6e9f6;
+          --sur-indigo: #ffffff;
+          --ocre: #a86412;
+          --rayon: 10px;
+          --police-titre: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+          --police-texte: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+          color-scheme: light;
+      }
+
+      @media (prefers-color-scheme: dark) {
+          :root {
+              --fond: #14161d;
+              --surface: #1c1f29;
+              --encre: #e8eaf0;
+              --encre-douce: #a4a9b8;
+              --ligne: #343847;
+              --indigo: #a3aff2;
+              --indigo-pale: #262d4d;
+              --sur-indigo: #14161d;
+              --ocre: #e0a458;
+              color-scheme: dark;
+          }
+      }
+
+      /* ---------- Base ---------- */
+      *,
+      *::before,
+      *::after {
+          box-sizing: border-box;
+      }
+
+      body {
+          margin: 0;
+          background: var(--fond);
+          color: var(--encre);
+          font-family: var(--police-texte);
+          font-size: 1rem;
+          line-height: 1.55;
+      }
+
+      a {
+          color: var(--indigo);
+      }
+
+      :focus-visible {
+          outline: 3px solid var(--ocre);
+          outline-offset: 2px;
+      }
+
+      h1,
+      h2 {
+          font-family: var(--police-titre);
+          line-height: 1.15;
+          margin: 0;
+      }
+
+      h1 {
+          font-size: clamp(2rem, 5vw, 2.75rem);
+          letter-spacing: -0.01em;
+      }
+
+      h2 {
+          font-size: 1.35rem;
+      }
+
+      .visuellement-cache {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          overflow: hidden;
+          clip: rect(0 0 0 0);
+          white-space: nowrap;
+      }
+
+      /* ---------- En-tête (partie commune : base.html.twig) ---------- */
+      .entete {
+          background: var(--surface);
+      }
+
+      .entete__barre {
+          max-width: 72rem;
+          margin: 0 auto;
+          padding: 0.75rem 1.25rem;
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: space-between;
+          gap: 0.5rem 2rem;
+      }
+
+      .marque {
+          display: flex;
+          align-items: center;
+          gap: 0.6rem;
+          min-height: 44px;
+          font-family: var(--police-titre);
+          font-weight: 700;
+          font-size: 1.25rem;
+          color: var(--encre);
+          text-decoration: none;
+      }
+
+      .marque svg {
+          color: var(--indigo);
+      }
+
+      .nav {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.25rem;
+          list-style: none;
+          margin: 0;
+          padding: 0;
+      }
+
+      .nav a {
+          display: inline-flex;
+          align-items: center;
+          min-height: 44px;
+          padding: 0 0.9rem;
+          border-radius: 999px;
+          color: var(--encre-douce);
+          text-decoration: none;
+      }
+
+      .nav a:hover {
+          color: var(--encre);
+      }
+
+      .nav a[aria-current="page"] {
+          background: var(--indigo-pale);
+          color: var(--indigo);
+          font-weight: 700;
+      }
+
+      /* Bande tissée, inspirée du Faso Dan Fani */
+      .tissage {
+          height: 6px;
+          background: repeating-linear-gradient(90deg,
+                  var(--indigo) 0 22px,
+                  var(--ocre) 22px 28px,
+                  var(--fond) 28px 31px,
+                  var(--indigo) 31px 37px,
+                  var(--fond) 37px 40px);
+      }
+
+      /* ---------- Mise en page ---------- */
+      .contenu {
+          max-width: 72rem;
+          margin: 0 auto;
+          padding: 2rem 1.25rem 4rem;
+      }
+
+      .tete-page {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: 1rem 2rem;
+          margin-bottom: 1.75rem;
+      }
+
+      .sous-titre {
+          margin: 0.4rem 0 0;
+          color: var(--encre-douce);
+      }
+
+      .panneau {
+          background: var(--surface);
+          border: 1px solid var(--ligne);
+          border-radius: 14px;
+          padding: 1.5rem;
+      }
+
+      .panneau+.panneau {
+          margin-top: 1.5rem;
+      }
+
+      .entete-panneau {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 1rem;
+          margin-bottom: 1.5rem;
+      }
+
+      /* ---------- Boutons ---------- */
+      .bouton {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          min-height: 44px;
+          padding: 0.55rem 1.15rem;
+          border: 2px solid var(--indigo);
+          border-radius: var(--rayon);
+          background: var(--indigo);
+          color: var(--sur-indigo);
+          font: inherit;
+          font-weight: 700;
+          text-decoration: none;
+          cursor: pointer;
+      }
+
+      .bouton--secondaire {
+          background: transparent;
+          color: var(--indigo);
+      }
+
+      .bouton:disabled {
+          opacity: 0.45;
+          cursor: not-allowed;
+      }
+
+      .groupe-boutons {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.75rem;
+      }
+
+      /* ---------- Recherche ---------- */
+      .recherche {
+          margin-bottom: 1.25rem;
+      }
+
+      .recherche label {
+          display: block;
+          font-weight: 700;
+          margin-bottom: 0.35rem;
+      }
+
+      .recherche input {
+          width: 100%;
+          max-width: 26rem;
+          min-height: 44px;
+          padding: 0.5rem 0.8rem;
+          border: 1px solid var(--encre-douce);
+          border-radius: var(--rayon);
+          background: var(--surface);
+          color: var(--encre);
+          font: inherit;
+      }
+
+      /* ---------- Tableaux ---------- */
+      .defilement {
+          overflow-x: auto;
+      }
+
+      table {
+          width: 100%;
+          min-width: 42rem;
+          border-collapse: collapse;
+      }
+
+      th {
+          padding: 0.75rem 1rem;
+          border-bottom: 1px solid var(--ligne);
+          text-align: left;
+          font-size: 0.875rem;
+          font-weight: 700;
+          color: var(--encre-douce);
+      }
+
+      td {
+          padding: 1rem;
+          border-bottom: 1px solid var(--ligne);
+          vertical-align: middle;
+      }
+
+      tbody tr:last-child td {
+          border-bottom: 0;
+      }
+
+      .nombre {
+          text-align: right;
+          font-variant-numeric: tabular-nums;
+      }
+
+      .nom-groupement {
+          font-weight: 700;
+          font-size: 1.05rem;
+          color: var(--encre);
+          text-decoration: none;
+      }
+
+      .nom-groupement:hover {
+          text-decoration: underline;
+      }
+
+      .discret {
+          display: block;
+          font-size: 0.9rem;
+          color: var(--encre-douce);
+      }
+
+      /* ---------- Statuts : classes calquées sur les valeurs de l'enum ---------- */
+      .statut {
+          display: inline-block;
+          padding: 0.15rem 0.65rem;
+          border-radius: 999px;
+          border: 1px solid transparent;
+          font-size: 0.85rem;
+          font-weight: 700;
+          white-space: nowrap;
+      }
+
+      .statut--en_cours {
+          background: var(--indigo);
+          color: var(--sur-indigo);
+      }
+
+      .statut--cloture {
+          background: transparent;
+          border-color: var(--encre-douce);
+          color: var(--encre-douce);
+      }
+
+      /* ---------- Fiche groupement ---------- */
+      .retour {
+          display: inline-flex;
+          align-items: center;
+          min-height: 44px;
+          margin-bottom: 0.25rem;
+          font-weight: 700;
+      }
+
+      .coordonnees {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem 2.5rem;
+          margin: 1rem 0 0;
+      }
+
+      .coordonnees dt {
+          font-size: 0.875rem;
+          color: var(--encre-douce);
+      }
+
+      .coordonnees dd {
+          margin: 0;
+          font-weight: 700;
+      }
+
+      /* Frise du cycle d'épargne : début → limite des prêts → fin → rétribution */
+      .frise {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .etape {
+          position: relative;
+          padding: 1.9rem 1rem 0 0;
+      }
+
+      .etape::before {
+          content: "";
+          position: absolute;
+          top: 0.45rem;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: var(--ligne);
+      }
+
+      .etape:last-child::before {
+          display: none;
+      }
+
+      .etape::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 1.15rem;
+          height: 1.15rem;
+          border-radius: 50%;
+          border: 3px solid var(--ligne);
+          background: var(--surface);
+      }
+
+      .etape--passee::before {
+          background: var(--indigo);
+      }
+
+      .etape--passee::after {
+          border-color: var(--indigo);
+          background: var(--indigo);
+      }
+
+      .etape--prochaine::after {
+          border-color: var(--ocre);
+      }
+
+      .etape__nom {
+          display: block;
+          font-size: 0.9rem;
+          color: var(--encre-douce);
+      }
+
+      .etape__date {
+          display: block;
+          font-family: var(--police-titre);
+          font-weight: 700;
+          font-size: 1.1rem;
+      }
+
+      .etape__note {
+          display: block;
+          margin-top: 0.25rem;
+          font-size: 0.9rem;
+          font-weight: 700;
+          color: var(--ocre);
+      }
+
+      /* État vide : un groupement sans exercice */
+      .vide {
+          padding: 2.5rem 1.5rem;
+          border: 2px dashed var(--ligne);
+          border-radius: 14px;
+      }
+
+      .vide p {
+          max-width: 38rem;
+          margin: 0.5rem 0 1.25rem;
+          color: var(--encre-douce);
+      }
+
+      /* ---------- Petits écrans ---------- */
+      @media (max-width: 40rem) {
+          .frise {
+              grid-template-columns: 1fr;
+          }
+
+          .etape {
+              padding: 0 0 1.5rem 2.1rem;
+          }
+
+          .etape::before {
+              top: 0.45rem;
+              bottom: 0;
+              left: 0.45rem;
+              right: auto;
+              width: 3px;
+              height: auto;
+          }
+      }
+
+      /* Séparation entre les écrans de la maquette (à ne pas intégrer) */
+      .fin-ecran {
+          margin: 0;
+          border: 0;
+          border-top: 4px double var(--encre-douce);
+      }
+
+      .form-search-inline {
+          display: flex;
+          align-items: center;
+          /* gap: 0.5rem; */
+          width: 100%;
+      }
+
+      .form-search-inline div:first-child {
+          width: 80%;
+      }
