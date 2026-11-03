@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Exercice{% endblock %}
+
+{% block body %}
+    <main class="contenu">
+        <a class="retour" href="#liste">Tous les groupements</a>
+ 
+        <div class="tete-page">
+            <div>
+                <h1>{{ groupementExerciceListDto.nom }}</h1>
+                <dl class="coordonnees">
+                    <div>
+                        <dt>Téléphone</dt>
+                        <dd>{{ groupementExerciceListDto.tel }}</dd>
+                    </div>
+                    <div>
+                        <dt>Adresse</dt>
+                        <dd>{{ groupementExerciceListDto.adresse }}</dd>
+                    </div>
+                </dl>
+            </div>
+            <div class="groupe-boutons">
+                <a class="bouton bouton--secondaire" href="#">Modifier</a>
+                <button class="bouton" type="button" disabled>Ouvrir un exercice</button>
+            </div>
+        </div>
+ 
+        <section class="panneau" aria-labelledby="titre-exercice">
+            <div class="entete-panneau">
+                <div>
+                    {% set exercice = groupementExerciceListDto.exercices[0] %}
+                    <h2 id="titre-exercice">Exercice en cours</h2>
+                    <p class="sous-titre"></p>
+                </div>
+                <button class="bouton bouton--secondaire" type="button">Clôturer l’exercice</button>
+            </div>
+ 
+            <ol class="frise">
+                <li class="etape etape--passee">
+                    <span class="etape__nom">Début</span>
+                    <span class="etape__date">{{ exercice.dateDebut|format_date("long") }}</span>
+                </li>
+                <li class="etape etape--prochaine">
+                    <span class="etape__nom">Date limite des prêts</span>
+                    <span class="etape__date">30 novembre 2026</span>
+                    <span class="etape__note">Encore 34 jours pour prêter</span>
+                </li>
+                <li class="etape">
+                    <span class="etape__nom">Fin</span>
+                    <span class="etape__date">{{ exercice.dateFin|format_date("long") }}</span>
+                </li>
+                <li class="etape">
+                    <span class="etape__nom">Rétribution</span>
+                    <span class="etape__date">14 mars 2027</span>
+                </li>
+            </ol>
+        </section>
+ 
+        <section class="panneau" aria-labelledby="titre-historique">
+            <div class="entete-panneau">
+                <h2 id="titre-historique">Historique des exercices</h2>
+            </div>
+            <div class="defilement">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Période</th>
+                            <th scope="col">Statut</th>
+                            <th scope="col">Rétribution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1er mars 2026 – 28 février 2027</td>
+                            <td><span class="statut statut--en_cours">En cours</span></td>
+                            <td>Prévue le 14 mars 2027</td>
+                        </tr>
+                        <tr>
+                            <td>1er mars 2025 – 28 février 2026</td>
+                            <td><span class="statut statut--cloture">Clôturé</span></td>
+                            <td>14 mars 2026</td>
+                        </tr>
+                        <tr>
+                            <td>4 mars 2024 – 28 février 2025</td>
+                            <td><span class="statut statut--cloture">Clôturé</span></td>
+                            <td>15 mars 2025</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+ 
+{% endblock %}

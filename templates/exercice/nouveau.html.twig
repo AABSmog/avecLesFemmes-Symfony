@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Exercice{% endblock %}
+
+{% block body %}
+    <main class="contenu"> 
+        <div class="tete-page">
+            <div>
+                <h1>Yiriwa</h1>
+                <dl class="coordonnees">
+                    <div>
+                        <dt>Téléphone</dt>
+                        <dd>+226 65 88 10 37</dd>
+                    </div>
+                    <div>
+                        <dt>Adresse</dt>
+                        <dd>Secteur 4, Banfora</dd>
+                    </div>
+                </dl>
+            </div>
+            <div class="groupe-boutons">
+                <a class="bouton bouton--secondaire" href="#">Modifier</a>
+            </div>
+        </div>
+ 
+        <section class="vide" aria-labelledby="titre-vide">
+            <h2 id="titre-vide">Aucun exercice pour l’instant</h2>
+            <p>Ouvrez le premier exercice pour commencer à enregistrer les cotisations et les prêts des membres de ce groupement.</p>
+            <button class="bouton" type="button">Ouvrir le premier exercice</button>
+        </section>
+    </main>
+{% endblock %}
