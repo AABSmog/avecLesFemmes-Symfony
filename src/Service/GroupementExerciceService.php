@@ -9,6 +9,7 @@ use App\Dto\ExerciceDto;
 use App\Repository\GroupementRepository;
 use App\Repository\ExerciceRepository;
 use App\Enum\StatutExercice;
+use App\Dto\GroupeSearchDto;
 
 class GroupementExerciceService
 {
@@ -19,11 +20,11 @@ class GroupementExerciceService
     }
 
     // TODO : find all groupement and exercices encours and convert them to GroupementListExerciceDto
-    public function findAllGroupementsAndExercicesEncours(): array
+    public function findAllGroupementsAndExercicesEncours(GroupeSearchDto $searchDto): array
     {
         // TODO : find all groupement and exercices encours and convert them to GroupementListExerciceDto
         //$groupements = $this->groupementRepository->findAll();
-        $groupements = $this->groupementRepository->findAllGroupementsAndExercicesEncours();
+        $groupements = $this->groupementRepository->findAllGroupementsAndExercicesEncours($searchDto);
         
         // MAPPING : convert groupement and exercices encours to GroupementListExerciceDto
         return array_map(function ($groupement) {

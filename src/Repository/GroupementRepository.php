@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Groupement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Dto\GroupeSearchDto;
 
 /**
  * @extends ServiceEntityRepository<Groupement>
@@ -34,17 +35,24 @@ class GroupementRepository extends ServiceEntityRepository
         }
     }
 
-    public function findAllGroupementsAndExercicesEncours(): array
+    public function findAllGroupementsAndExercicesEncours(GroupeSearchDto $searchDto): array
     {
         // SELECT * FROM groupement g LEFT JOIN execice e ON g.id = e.groupement_id WHERE e.statut = 'en_cours'
-        return $this->createQueryBuilder('g')
+        $qb = $this->createQueryBuilder('g')
             ->leftJoin('g.exercices', 'e')
             ->addSelect('e')
             ->where('e.statut = :statut')
-            ->setParameter('statut', 'en_cours')
-            ->getQuery()
-            ->getResult();
+            ->setParameter('statut', 'en_cours');
+
+        if ($searchDto->query) {
+            $qb->andWhere('g.nom LIKE :query OR g.adresse LIKE :query')
+                ->setParameter('query', '%' . $searchDto->query . '%');
+        }
+
+        return $qb->getQuery()->getResult();
     }
+
+    
 //    /**
 //     * @return Groupement[] Returns an array of Groupement objects
 //     */

@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Form;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Dto\GroupeSearchDto;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
+
+
+class GroupeSearchType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('query', SearchType::class, [
+                'required' => false,
+                'label'  => false,
+                'attr' => [
+                    'placeholder' => 'Nom ou ville',
+                ],
+            ])
+            // ->add('ville', SearchType::class, [
+            //     'required' => false,
+            //     'label'  => false,
+            //     'attr' => [
+            //         'placeholder' => 'ville',
+            //     ],
+            // ])
+            // ->add('nom', SearchType::class, [
+            //     'required' => false,
+            //     'label'  => false,
+            //     'attr' => [
+            //         'placeholder' => 'nom',
+            //     ],
+            // ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Filtrer',
+                'attr' => [
+                    'class' => 'bouton',
+                ],
+            ])
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            // Configure your form options here
+            'data_class' => GroupeSearchDto::class,
+            'method' => 'POST',
+            'csrf_protection' => false,
+        ]);
+    }
+}
