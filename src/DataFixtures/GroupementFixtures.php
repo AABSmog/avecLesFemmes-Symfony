@@ -14,6 +14,8 @@ class GroupementFixtures extends Fixture
             ['GIE Teranga Mbour', '+221 77 123 45 67', 'Mbour, Thiès'],
             ['GIE Jappo Dakar', '+221 78 234 56 78', 'Pikine, Dakar'],
             ['GIE Dëgg Saint-Louis', '+221 76 345 67 89', 'Sor, Saint-Louis'],
+            ['GIE Wàllar Thiès', '+221 77 456 78 90', 'Thiès, Thiès'],
+            ['GIE Ndingël Louga', '+221 70 567 89 01', 'Louga, Louga'],
         ];
         foreach ($data as $key => [$nom, $tel, $adresse]) {
             // $nom = $groupement[0];
