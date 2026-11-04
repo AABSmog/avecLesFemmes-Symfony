@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Groupement;
+use App\Enum\StatutExercice;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Dto\GroupeSearchDto;
 
@@ -37,19 +39,31 @@ class GroupementRepository extends ServiceEntityRepository
 
     public function findAllGroupementsAndExercicesEncours(GroupeSearchDto $searchDto): array
     {
-        // SELECT * FROM groupement g LEFT JOIN execice e ON g.id = e.groupement_id WHERE e.statut = 'en_cours'
-        $qb = $this->createQueryBuilder('g')
-            ->leftJoin('g.exercices', 'e')
-            ->addSelect('e')
-            ->where('e.statut = :statut')
-            ->setParameter('statut', 'en_cours');
+        return $this->appliquerFiltre($this->listeQueryBuilder(), $searchDto)
+            ->getQuery()
+            ->getResult();
+    }
 
-        if ($searchDto->query) {
-            $qb->andWhere('g.nom LIKE :query OR g.adresse LIKE :query')
-                ->setParameter('query', '%' . $searchDto->query . '%');
+    private function listeQueryBuilder(): QueryBuilder
+    {
+        // La condition est dans le WITH : un where sur e.statut transformerait la
+        // jointure en INNER JOIN et masquerait les groupements sans exercice en cours.
+        return $this->createQueryBuilder('g')
+            ->leftJoin('g.exercices', 'e', 'WITH', 'e.statut = :statut')
+            ->addSelect('e')
+            ->setParameter('statut', StatutExercice::ENCOURS)
+            ->orderBy('g.nom', 'ASC')
+            ->addOrderBy('g.id', 'ASC');
+    }
+
+    private function appliquerFiltre(QueryBuilder $qb, GroupeSearchDto $searchDto): QueryBuilder
+    {
+        if ($searchDto->aUneRecherche()) {
+            $qb->andWhere('LOWER(g.nom) LIKE :query OR LOWER(g.adresse) LIKE :query')
+                ->setParameter('query', $searchDto->recherchePourLike());
         }
 
-        return $qb->getQuery()->getResult();
+        return $qb;
     }
 
     
