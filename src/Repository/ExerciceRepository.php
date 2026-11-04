@@ -16,6 +16,32 @@ class ExerciceRepository extends ServiceEntityRepository
         parent::__construct($registry, Exercice::class);
     }
 
+    /**
+     * Nombre d'exercices par groupement, en une seule requête d'agrégation.
+     *
+     * @param int[] $idsGroupements
+     * @return array<int, int> groupement id => nombre d'exercices
+     */
+    public function compterParGroupements(array $idsGroupements): array
+    {
+        if ([] === $idsGroupements) {
+            return [];
+        }
+
+        $lignes = $this->createQueryBuilder('e')
+            ->select('IDENTITY(e.groupement) AS idGroupement', 'COUNT(e.id) AS nombre')
+            ->where('e.groupement IN (:ids)')
+            ->setParameter('ids', $idsGroupements)
+            ->groupBy('idGroupement')
+            ->getQuery()
+            ->getResult();
+
+        return array_combine(
+            array_column($lignes, 'idGroupement'),
+            array_map(static fn (array $ligne): int => (int) $ligne['nombre'], $lignes),
+        );
+    }
+
 //    /**
 //     * @return Exercice[] Returns an array of Exercice objects
 //     */
