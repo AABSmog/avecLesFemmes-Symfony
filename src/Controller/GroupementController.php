@@ -18,7 +18,7 @@ final class GroupementController extends AbstractController
     }
     
     // doit permettre l'affichage et le filtre
-    #[Route('/groupement', name: 'app_groupement')]
+    #[Route('/groupement', name: 'app_groupement', methods: ['GET'])]
     public function index(Request $request): Response
     {
         $searchDto = new GroupeSearchDto();
