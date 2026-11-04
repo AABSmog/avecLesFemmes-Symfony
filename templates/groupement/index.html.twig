@@ -17,18 +17,9 @@
       <section class="panneau" aria-labelledby="titre-liste">
         <h2 id="titre-liste" class="visuellement-cache">Liste des groupements</h2>
  
-        {# <form action="{{ path('app_groupement') }}" method="post" class="recherche" role="search">
-          <label for="q">Rechercher un groupement</label>
-          <input id="q" name="q" type="search" placeholder="Nom ou ville">
-          <button type="submit">Filtrer</button>
-        </form> #}
-        
-        {# {{ form(formSearchGroupement) }} #}
-        
         {{ form_start(formSearchGroupement, {'attr': {'class': 'recherche form-search-inline', 'role': 'search'}}) }}
-            {{ form_row(formSearchGroupement.query, {'attr': {'class': 'form-control'}}) }}
+            {{ form_row(formSearchGroupement.query) }}
             {{ form_row(formSearchGroupement.submit) }}
-            {# {{ form_row(formSearchGroupement.submit, {'attr': {'class': 'bouton'}}) }} #}
         {{ form_end(formSearchGroupement) }}
  
         <div class="defilement">
