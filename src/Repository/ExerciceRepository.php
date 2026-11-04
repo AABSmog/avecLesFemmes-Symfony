@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Exercice;
+use App\Entity\Groupement;
+use App\Enum\StatutExercice;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -40,6 +42,22 @@ class ExerciceRepository extends ServiceEntityRepository
             array_column($lignes, 'idGroupement'),
             array_map(static fn (array $ligne): int => (int) $ligne['nombre'], $lignes),
         );
+    }
+
+    /**
+     * Exercice en cours le plus récent d'un groupement, ou null.
+     */
+    public function findEncoursPourGroupement(Groupement $groupement): ?Exercice
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.groupement = :groupement')
+            ->andWhere('e.statut = :statut')
+            ->setParameter('groupement', $groupement)
+            ->setParameter('statut', StatutExercice::ENCOURS)
+            ->orderBy('e.debutAt', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
 //    /**

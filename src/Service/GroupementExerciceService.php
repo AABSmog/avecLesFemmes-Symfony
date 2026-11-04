@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Dto\ExerciceEncoursDto;
+use App\Dto\EtapeFriseDto;
 use App\Dto\GroupeListeDto;
 use App\Dto\GroupeSearchDto;
 use App\Dto\GroupementExerciceListDto;
@@ -61,10 +62,81 @@ class GroupementExerciceService
             return null;
         }
         $exercices = $this->exerciceRepository->findBy(['groupement' => $idGroupement], ['statut' => 'DESC']);
-        $exercicesDto = array_map(function ($exercice) {
-            return ExerciceDto::fromEntity($exercice);
-        }, $exercices);
-        return GroupementExerciceListDto::fromEntity($groupement, $exercicesDto);
+        $exercicesDto = array_map(
+            fn (Exercice $exercice): ExerciceDto => $this->exerciceDto($exercice),
+            $exercices,
+        );
+
+        $exerciceEncours = $this->exerciceRepository->findEncoursPourGroupement($groupement);
+        $encoursDto = $exerciceEncours instanceof Exercice ? $this->exerciceDto($exerciceEncours) : null;
+
+        return GroupementExerciceListDto::fromEntity(
+            $groupement,
+            $exercicesDto,
+            $encoursDto,
+            $encoursDto instanceof ExerciceDto ? $this->etapesDeFrise($encoursDto) : [],
+        );
+    }
+
+    private function exerciceDto(Exercice $exercice): ExerciceDto
+    {
+        return ExerciceDto::fromEntity(
+            $exercice,
+            $this->joursRestants($exercice->getLimitePretsAt()),
+        );
+    }
+
+    /**
+     * Nombre de jours entiers avant la date : négatif si la date est passée.
+     */
+    private function joursRestants(?\DateTimeInterface $date): ?int
+    {
+        if (!$date instanceof \DateTimeInterface) {
+            return null;
+        }
+
+        $aujourdhui = new \DateTimeImmutable('today');
+        $cible = \DateTimeImmutable::createFromInterface($date)->setTime(0, 0);
+
+        return (int) $aujourdhui->diff($cible)->format('%r%a');
+    }
+
+    /**
+     * Frise : étapes déjà passées, puis la prochaine, puis les suivantes.
+     *
+     * @return EtapeFriseDto[]
+     */
+    private function etapesDeFrise(ExerciceDto $encours): array
+    {
+        $aujourdhui = new \DateTimeImmutable('today');
+        $etapesBrutes = [
+            ['Début', $encours->dateDebut, null],
+            ['Date limite des prêts', $encours->dateLimitePrets, $encours->notePrets()],
+            ['Fin', $encours->dateFin, null],
+            ['Rétribution', $encours->dateRetribution, null],
+        ];
+
+        $prochaineDejaMarquee = false;
+        $etapes = [];
+
+        foreach ($etapesBrutes as [$nom, $date, $note]) {
+            $estPasse = $date instanceof \DateTimeInterface
+                && \DateTimeImmutable::createFromInterface($date)->setTime(0, 0) < $aujourdhui;
+
+            $classe = match (true) {
+                $estPasse => 'etape etape--passee',
+                !$prochaineDejaMarquee => 'etape etape--prochaine',
+                default => 'etape',
+            };
+
+            if (!$estPasse) {
+                $prochaineDejaMarquee = true;
+            }
+
+            $etapes[] = new EtapeFriseDto($nom, $date, $classe, $note);
+        }
+
+        return $etapes;
     }
 
     private function entete(int $total, GroupeSearchDto $searchDto): string
