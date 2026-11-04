@@ -20,26 +20,18 @@ final class ExerciceController extends AbstractController
     public function index(int $idGroupement): Response
     {
         $groupementExerciceListDto = $this->groupementExerciceService->findOneGroupementWithExercices($idGroupement);
-        if ($groupementExerciceListDto === null) {
-            // Rediriger vers la page de l'exercice
-            return $this->redirectToRoute('app_groupement');
-        }
-        
-        if (count($groupementExerciceListDto->exercices) === 0) {
-            // Rediriger vers la page de l'exercice
-            return $this->redirectToRoute('app_nouveau_exercice');
-        }
-        return $this->render('exercice/index.html.twig', [
-            'controller_name' => 'ExerciceController',
-            'groupementExerciceListDto' => $groupementExerciceListDto,
-        ]);
-    }
 
-    #[Route('/nouveau-exercice', name: 'app_nouveau_exercice')]
-    public function nouveau(): Response
-    {
-        return $this->render('exercice/nouveau.html.twig', [
-            'controller_name' => 'ExerciceController',
+        if ($groupementExerciceListDto === null) {
+            throw $this->createNotFoundException(sprintf('Le groupement « %d » n\'existe pas.', $idGroupement));
+        }
+
+        // Un groupement sans exercice a sa propre vue d'état vide, avec ses données à lui.
+        $vue = $groupementExerciceListDto->aDesExercices()
+            ? 'exercice/index.html.twig'
+            : 'exercice/nouveau.html.twig';
+
+        return $this->render($vue, [
+            'groupementExerciceListDto' => $groupementExerciceListDto,
         ]);
     }
 }
