@@ -17,25 +17,14 @@ class GroupeSearchType extends AbstractType
         $builder
             ->add('query', SearchType::class, [
                 'required' => false,
-                'label'  => false,
+                'label' => 'Rechercher un groupement',
+                'label_attr' => [
+                    'class' => 'visuellement-cache',
+                ],
                 'attr' => [
                     'placeholder' => 'Nom ou ville',
                 ],
             ])
-            // ->add('ville', SearchType::class, [
-            //     'required' => false,
-            //     'label'  => false,
-            //     'attr' => [
-            //         'placeholder' => 'ville',
-            //     ],
-            // ])
-            // ->add('nom', SearchType::class, [
-            //     'required' => false,
-            //     'label'  => false,
-            //     'attr' => [
-            //         'placeholder' => 'nom',
-            //     ],
-            // ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Filtrer',
                 'attr' => [
@@ -48,10 +37,17 @@ class GroupeSearchType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // Configure your form options here
             'data_class' => GroupeSearchDto::class,
-            'method' => 'POST',
+            // GET : l'URL porte le filtre, elle est donc partageable et rechargeable.
+            'method' => 'GET',
             'csrf_protection' => false,
+            'allow_extra_fields' => true,
         ]);
+    }
+
+    public function getBlockPrefix(): string
+    {
+        // Sans préfixe, l'URL reste /groupement?query=mbour plutôt que groupe_search[query].
+        return '';
     }
 }
