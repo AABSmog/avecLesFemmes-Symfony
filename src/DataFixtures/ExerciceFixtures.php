@@ -11,15 +11,32 @@ use Doctrine\Persistence\ObjectManager;
 
 class ExerciceFixtures extends Fixture implements DependentFixtureInterface
 {
-    // private GroupementRepository $repo;
-
-    // public function __construct(GroupementRepository $repo) {
-    //     $this->repo = $repo;
-    // }
-
     public function __construct(private readonly GroupementRepository $repo) {
         
     }
+
+    /**
+     * Décalages en jours par rapport à aujourd'hui, pour que la démonstration
+     * reste parlante quelle que soit la date de la soutenance.
+     */
+    private const CYCLES = [
+        'GIE Teranga Mbour' => [
+            ['debut' => -975, 'limite' => -695, 'fin' => -610, 'retribution' => -595, 'statut' => 'cloture'],
+            ['debut' => -610, 'limite' => -330, 'fin' => -245, 'retribution' => -230, 'statut' => 'cloture'],
+            ['debut' => -240, 'limite' => 41, 'fin' => 120, 'retribution' => 135, 'statut' => 'en_cours'],
+        ],
+        'GIE Jappo Dakar' => [
+            ['debut' => -975, 'limite' => -695, 'fin' => -610, 'retribution' => -595, 'statut' => 'cloture'],
+            ['debut' => -610, 'limite' => -330, 'fin' => -245, 'retribution' => -230, 'statut' => 'cloture'],
+        ],
+        'GIE Dëgg Saint-Louis' => [
+            ['debut' => -240, 'limite' => 0, 'fin' => 120, 'retribution' => 135, 'statut' => 'en_cours'],
+        ],
+        'GIE Wàllar Thiès' => [],
+        'GIE Ndingël Louga' => [
+            ['debut' => -240, 'limite' => -20, 'fin' => 60, 'retribution' => 75, 'statut' => 'en_cours'],
+        ],
+    ];
 
     public function getDependencies(): array {
         return [GroupementFixtures::class];
@@ -27,20 +44,24 @@ class ExerciceFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        $groupements = $this->repo->findAll();
-        foreach ($groupements as $key => $groupement) {
-            $exercice = (new Exercice())
-                        ->setGroupement($groupement)
-                        ->setDebutAt(new \DateTime('2026-01-01'))
-                        ->setFinAt(new \DateTime('2026-12-31'))
-                        ->setLimitePretsAt(new \DateTime('2026-10-01'))
-                        ->setRetributionAt(new \DateTime('2026-11-01'))
-                        ->setStatut(StatutExercice::ENCOURS);
-            $manager->persist($exercice);
+        foreach ($this->repo->findAll() as $groupement) {
+            foreach (self::CYCLES[$groupement->getNom()] ?? [] as $cycle) {
+                $exercice = (new Exercice())
+                    ->setGroupement($groupement)
+                    ->setDebutAt(self::date($cycle['debut']))
+                    ->setLimitePretsAt(self::date($cycle['limite']))
+                    ->setFinAt(self::date($cycle['fin']))
+                    ->setRetributionAt(self::date($cycle['retribution']))
+                    ->setStatut(StatutExercice::from($cycle['statut']));
+                $manager->persist($exercice);
+            }
         }
-        // $product = new Product();
-        // $manager->persist($product);
 
         $manager->flush();
+    }
+
+    private static function date(int $decalageJours): \DateTime
+    {
+        return (new \DateTime('today'))->modify(sprintf('%+d days', $decalageJours));
     }
 }
