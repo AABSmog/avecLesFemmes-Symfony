@@ -16,7 +16,7 @@ final class ExerciceController extends AbstractController
     // \d+' : expression régulière pour indiquer que l'ID doit être un nombre entier
     // d : indique que l'ID doit être un chiffre (0-9)
     // + : indique que l'ID doit contenir au moins un chiffre
-    #[Route('{idGroupement}/exercice', name: 'app_exercice', requirements: ['idGroupement' => '\d+'])]
+    #[Route('{idGroupement}/exercice', name: 'app_exercice', methods: ['GET'], requirements: ['idGroupement' => '\d+'])]
     public function index(int $idGroupement): Response
     {
         $groupementExerciceListDto = $this->groupementExerciceService->findOneGroupementWithExercices($idGroupement);
