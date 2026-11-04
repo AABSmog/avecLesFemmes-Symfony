@@ -9,7 +9,7 @@
       <div class="tete-page">
         <div> 
           <h1>Groupements</h1>
-          <p class="sous-titre">3 groupements suivis</p>
+          <p class="sous-titre">{{ liste.entete }}</p>
         </div>
         <a class="bouton" href="#">Nouveau groupement</a>
       </div>
@@ -43,8 +43,7 @@
               </tr>
             </thead>
             <tbody>
-              {% for groupement in dataGroupements %}
-          
+              {% for groupement in liste.groupements %}
                 <tr>
                   <td>
                     <a class="nom-groupement" href="{{ path('app_exercice', {'idGroupement': groupement.id}) }}">{{ groupement.nom }}</a>
@@ -52,15 +51,21 @@
                   </td>
                   <td>{{ groupement.tel }}</td>
                   <td>
-                    <span class="statut statut--en_cours">{{ groupement.exerciceEncoursDto.statut }}</span>
-                    <span class="discret">depuis le {{ groupement.exerciceEncoursDto.dateDebut|format_date('long') }}</span>
+                    {% if groupement.exerciceEncoursDto %}
+                      <span class="statut {{ groupement.exerciceEncoursDto.classeStatut }}">{{ groupement.exerciceEncoursDto.statut }}</span>
+                      <span class="discret">depuis le {{ groupement.exerciceEncoursDto.dateDebut|format_date('long') }}</span>
+                    {% else %}
+                      <span class="discret">Aucun exercice en cours</span>
+                    {% endif %}
                   </td>
-                  <td class="nombre">3</td>
-                  <td><a href="#fiche-benkadi">Voir la fiche</a></td>
+                  <td class="nombre">{{ groupement.nombreExercices }}</td>
+                  <td><a href="{{ path('app_exercice', {'idGroupement': groupement.id}) }}">Voir la fiche</a></td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td colspan="5">{{ liste.messageVide }}</td>
                 </tr>
               {% endfor %}
-          
-          
             </tbody>
           </table>
         </div>

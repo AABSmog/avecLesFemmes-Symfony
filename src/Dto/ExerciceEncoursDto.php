@@ -9,8 +9,9 @@ final readonly class ExerciceEncoursDto
     public function __construct(
         public int $id,
         public \DateTime $dateDebut,
-        public \DateTime $dateFin,
+        public ?\DateTime $dateFin,
         public string $statut,
+        public string $classeStatut,
     ) {
     }
 
@@ -21,6 +22,7 @@ final readonly class ExerciceEncoursDto
             $exerciceEntity->getDebutAt(),
             $exerciceEntity->getFinAt(),
             $exerciceEntity->getStatut()->label(),
+            $exerciceEntity->getStatut()->classeStatut(),
         );
     }
 }

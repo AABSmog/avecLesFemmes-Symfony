@@ -12,4 +12,8 @@ enum StatutExercice: string {
             self::CLOTURE => "Clôturé",
         };
     }
+
+    public function classeStatut(): string {
+        return 'statut--' . $this->value;
+    }
 }

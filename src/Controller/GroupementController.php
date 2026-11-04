@@ -29,7 +29,7 @@ final class GroupementController extends AbstractController
         
         return $this->render('groupement/index.html.twig', [
             'controller_name' => 'GroupementController',
-            'dataGroupements' => $groupements,
+            'liste' => $groupements,
             'formSearchGroupement' => $form->createView(),
         ]);
     }
