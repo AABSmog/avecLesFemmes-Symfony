@@ -3,18 +3,20 @@
 {% block title %}Exercice{% endblock %}
 
 {% block body %}
-    <main class="contenu"> 
+    <main class="contenu">
+        <a class="retour" href="{{ path('app_groupement') }}">Tous les groupements</a>
+
         <div class="tete-page">
             <div>
-                <h1>Yiriwa</h1>
+                <h1>{{ groupementExerciceListDto.nom }}</h1>
                 <dl class="coordonnees">
                     <div>
                         <dt>Téléphone</dt>
-                        <dd>+226 65 88 10 37</dd>
+                        <dd>{{ groupementExerciceListDto.tel }}</dd>
                     </div>
                     <div>
                         <dt>Adresse</dt>
-                        <dd>Secteur 4, Banfora</dd>
+                        <dd>{{ groupementExerciceListDto.adresse }}</dd>
                     </div>
                 </dl>
             </div>
@@ -22,11 +24,11 @@
                 <a class="bouton bouton--secondaire" href="#">Modifier</a>
             </div>
         </div>
- 
+
         <section class="vide" aria-labelledby="titre-vide">
-            <h2 id="titre-vide">Aucun exercice pour l’instant</h2>
+            <h2 id="titre-vide">Aucun exercice pour l'instant</h2>
             <p>Ouvrez le premier exercice pour commencer à enregistrer les cotisations et les prêts des membres de ce groupement.</p>
-            <button class="bouton" type="button">Ouvrir le premier exercice</button>
+            <button class="bouton" type="button" disabled>Ouvrir le premier exercice</button>
         </section>
     </main>
 {% endblock %}
