@@ -26,7 +26,7 @@
         {% block menu %}
             <header class="entete" id="liste">
                 <div class="entete__barre">
-                    <a class="marque" href="{{ path('app_groupement') }}">
+                    <a class="marque" href="{{ path('app_home') }}">
                         <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
                             <path d="M3 13h22a11 11 0 0 1-22 0Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
                             <path d="M8 9c3-2.5 9-2.5 12 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
@@ -36,9 +36,10 @@
                     {% set route = app.request.attributes.get('_route')|default('') %}
                     <nav aria-label="Navigation principale">
                         <ul class="nav">
+                            <li><a href="{{ path('app_home') }}" {% if route starts with 'app_home' %}aria-current="page"{% endif %}>Accueil</a></li>
                             <li><a href="{{ path('app_groupement') }}" {% if route starts with 'app_groupement' %}aria-current="page"{% endif %}>Groupements</a></li>
-                            <li><a href="#">Membres</a></li>
                             <li><a href="{{ path('app_groupement') }}" {% if route starts with 'app_exercice' %}aria-current="page"{% endif %}>Exercices</a></li>
+                            <li><span class="nav__attente" aria-disabled="true" title="Écran prévu avec l'authentification">Membres</span></li>
                         </ul>
                     </nav>
                 </div>

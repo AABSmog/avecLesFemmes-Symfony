@@ -32,6 +32,7 @@ enregistrement A local pointant vers la machine de dev.
 
 | URL | Écran |
 | --- | --- |
+| `/` | page d'entrée : pitch, chiffres du portefeuille et accès à la liste |
 | `/groupement` | liste des groupements, formulaire de recherche et compteurs |
 | `/groupement?query=mbour` | même liste filtrée sur le nom **ou** la ville |
 | `/{id}/exercice` | fiche du groupement : frise de l'exercice en cours et historique |
@@ -86,19 +87,35 @@ démonstration** pour que les libellés restent justes le jour de la soutenance 
 ## Tests
 
 ```bash
-php vendor/bin/phpunit      # 29 tests, 72 assertions
+php vendor/bin/phpunit      # 36 tests, 89 assertions
 ```
 
 - `tests/Dto/ExerciceDtoTest.php` : libellés des jours restants.
 - `tests/Service/GroupementExerciceServiceTest.php` : filtre, comptage, frise, états.
 - `tests/Controller/GroupementListeTest.php` : formulaire GET, liens, aucun `<form>` brut dans Twig, 404.
+- `tests/Controller/NavigationTest.php` : page d'entrée, menu courant, aucun `href="#"` restant.
+
+## Navigation
+
+```
+/  ──▶  /groupement  ──▶  /{id}/exercice
+▲            │                    │
+└────────────┴── marque / menu ───┘
+```
+
+- Le menu (Accueil, Groupements, Exercices) marque la page courante avec
+  `aria-current="page"` ; la marque ramène à l'accueil.
+- Une ligne de la liste, un nom de groupement et « Voir la fiche » mènent tous à la
+  fiche du même groupement ; la fiche et l'état vide renvoient à la liste.
+- `Membres`, `Nouveau groupement` et `Modifier` correspondent à des écrans non
+  encore livrés : ce sont des éléments désactivés, pas des ancres vides.
 
 ## Branches de la lignée
 
 `livrable/4` est la branche de livraison, alimentée par des branches de travail
 fusionnées en `--no-ff` : `livrable/4-filtre`, `livrable/4-form`,
 `livrable/4-jours`, `livrable/4-nav`, `livrable/4-fixtures`, `livrable/4-tests`,
-`livrable/4-docs`.
+`livrable/4-docs`, `livrable/4-landing`.
 
 La lignée précédente (`livrable/3`, refactor DTO/service/pagination complet) est
 publiée sur <https://github.com/AABSmog/Symfony-Femmes> et ne partage pas

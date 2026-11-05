@@ -478,3 +478,70 @@
       .form-search-inline div:first-child {
           width: 80%;
       }
+      /* ---------- Page d'accueil ---------- */
+      .nav__attente {
+          display: inline-flex;
+          align-items: center;
+          min-height: 44px;
+          padding: 0 0.9rem;
+          border-radius: 999px;
+          color: var(--encre-douce);
+          opacity: 0.55;
+          cursor: not-allowed;
+      }
+
+      .sur-titre {
+          margin: 0 0 0.5rem;
+          color: var(--ocre);
+          font-weight: 700;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          font-size: 0.8rem;
+      }
+
+      .accueil h1 {
+          max-width: 34ch;
+      }
+
+      .chiffres {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1rem 2.5rem;
+          list-style: none;
+          margin: 1.5rem 0;
+          padding: 0;
+      }
+
+      .chiffres li {
+          display: flex;
+          flex-direction: column;
+      }
+
+      .chiffre__valeur {
+          font-family: var(--police-titre);
+          font-size: 2.25rem;
+          line-height: 1.1;
+          color: var(--indigo);
+      }
+
+      .entrees {
+          display: grid;
+          gap: 1rem;
+          list-style: none;
+          margin: 0;
+          padding: 0;
+      }
+
+      .entrees li {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: baseline;
+          gap: 0.25rem 0.75rem;
+          padding-bottom: 1rem;
+          border-bottom: 1px solid var(--ligne);
+      }
+
+      .entrees li:last-child {
+          border-bottom: 0;
+          padding-bottom: 0;
+      }
