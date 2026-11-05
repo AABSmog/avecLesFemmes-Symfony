@@ -163,6 +163,17 @@ final class GroupementExerciceServiceTest extends KernelTestCase
         self::assertNull($this->service->findOneGroupementWithExercices(9999));
     }
 
+    public function testLesChiffresDeLAccueilSontComptesEnBase(): void
+    {
+        $accueil = $this->service->chiffresPourAccueil();
+
+        self::assertSame([5, 3], array_map(static fn ($chiffre): int => $chiffre->valeur, $accueil->chiffres));
+        self::assertSame(['5 groupements suivis', '3 exercices en cours'], array_map(
+            static fn ($chiffre): string => $chiffre->libelle,
+            $accueil->chiffres,
+        ));
+    }
+
     private function ficheDe(string $nom): \App\Dto\GroupementExerciceListDto
     {
         return $this->service->findOneGroupementWithExercices($this->groupement($nom)->getId());
