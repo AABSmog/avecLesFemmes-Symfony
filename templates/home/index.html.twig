@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Avec les femmes — suivi des groupements{% endblock %}
+
+{% block body %}
+    <main class="contenu">
+        <section class="panneau accueil" aria-labelledby="titre-accueil">
+            <p class="sur-titre">Gestion des groupements féminins</p>
+            <h1 id="titre-accueil">Suivre les exercices de chaque groupement</h1>
+            <p class="sous-titre">
+                Retrouvez les cotisations, les prêts et les rétributions de chaque groupement,
+                cycle après cycle.
+            </p>
+
+            <ul class="chiffres">
+                {% for chiffre in accueil.chiffres %}
+                    <li>
+                        <span class="chiffre__valeur">{{ chiffre.valeur }}</span>
+                        <span class="chiffre__libelle discret">{{ chiffre.libelle }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <div class="groupe-boutons">
+                <a class="bouton" href="{{ path('app_groupement') }}">Voir les groupements</a>
+            </div>
+        </section>
+
+        <section class="panneau" aria-labelledby="titre-nav">
+            <h2 id="titre-nav">Par où commencer</h2>
+            <ul class="entrees">
+                <li>
+                    <a class="nom-groupement" href="{{ path('app_groupement') }}">Groupements</a>
+                    <span class="discret">La liste complète, filtrable par nom ou par ville ; chaque ligne ouvre la frise de l'exercice en cours.</span>
+                </li>
+                <li>
+                    <span class="nom-groupement">Membres</span>
+                    <span class="discret">Suivi des adhérentes&nbsp;: écran à venir, avec l'authentification.</span>
+                </li>
+            </ul>
+        </section>
+    </main>
+{% endblock %}

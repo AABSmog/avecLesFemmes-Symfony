@@ -44,6 +44,16 @@ class ExerciceRepository extends ServiceEntityRepository
         );
     }
 
+    public function compterEncours(): int
+    {
+        return (int) $this->createQueryBuilder('e')
+            ->select('COUNT(e.id)')
+            ->andWhere('e.statut = :statut')
+            ->setParameter('statut', StatutExercice::ENCOURS)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     /**
      * Exercice en cours le plus récent d'un groupement, ou null.
      */

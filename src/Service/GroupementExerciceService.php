@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use App\Dto\AccueilDto;
+use App\Dto\ChiffreDto;
 use App\Dto\ExerciceEncoursDto;
 use App\Dto\EtapeFriseDto;
 use App\Dto\GroupeListeDto;
@@ -139,9 +141,28 @@ class GroupementExerciceService
         return $etapes;
     }
 
+    /**
+     * Chiffres clés de la page d'accueil, comptés en base.
+     */
+    public function chiffresPourAccueil(): AccueilDto
+    {
+        $groupements = $this->groupementRepository->compterGroupements();
+        $encours = $this->exerciceRepository->compterEncours();
+
+        return new AccueilDto([
+            new ChiffreDto($groupements, sprintf('%d groupement%s suivi%s', $groupements, $this->accord($groupements), $this->accord($groupements))),
+            new ChiffreDto($encours, sprintf('%d exercice%s en cours', $encours, $this->accord($encours))),
+        ]);
+    }
+
+    private function accord(int $total): string
+    {
+        return $total > 1 ? 's' : '';
+    }
+
     private function entete(int $total, GroupeSearchDto $searchDto): string
     {
-        $pluriel = $total > 1 ? 's' : '';
+        $pluriel = $this->accord($total);
 
         if ($searchDto->aUneRecherche()) {
             return sprintf('%d groupement%s trouvé%s pour « %s »',

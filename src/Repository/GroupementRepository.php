@@ -44,6 +44,14 @@ class GroupementRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function compterGroupements(): int
+    {
+        return (int) $this->createQueryBuilder('g')
+            ->select('COUNT(g.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     private function listeQueryBuilder(): QueryBuilder
     {
         // La condition est dans le WITH : un where sur e.statut transformerait la
